@@ -4,17 +4,31 @@ import Layout from "@/components/Layout";
 import FeedFilter from "@/components/feed/FeedFilter";
 import FeedCard from "@/components/feed/FeedCard";
 import { sampleFeed } from "@/data/sampleFeed";
-import { Platform } from "@/types/feed";
+import { Platform, FeedItem } from "@/types/feed";
+import { useMediumFeed } from "@/hooks/useMediumFeed";
+
+const MEDIUM_USERNAME = "sandroscalco";
 
 const Index = () => {
   const [activeFilter, setActiveFilter] = useState<Platform | "all">("all");
+  const { data: mediumArticles, isLoading: mediumLoading } = useMediumFeed(MEDIUM_USERNAME);
+
+  // Combine real Medium articles with sample data for other platforms
+  const allFeedItems = useMemo(() => {
+    const otherPlatformItems = sampleFeed.filter(item => item.platform !== "medium");
+    const mediumItems: FeedItem[] = mediumArticles || [];
+    
+    return [...mediumItems, ...otherPlatformItems].sort(
+      (a, b) => b.date.getTime() - a.date.getTime()
+    );
+  }, [mediumArticles]);
 
   const filteredFeed = useMemo(() => {
     if (activeFilter === "all") {
-      return sampleFeed;
+      return allFeedItems;
     }
-    return sampleFeed.filter((item) => item.platform === activeFilter);
-  }, [activeFilter]);
+    return allFeedItems.filter((item) => item.platform === activeFilter);
+  }, [activeFilter, allFeedItems]);
 
   return (
     <Layout>
@@ -31,6 +45,10 @@ const Index = () => {
       </motion.div>
 
       <FeedFilter activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+
+      {mediumLoading && activeFilter === "all" || activeFilter === "medium" ? (
+        <p className="py-4 text-sm text-muted-foreground">Lade Medium-Artikel...</p>
+      ) : null}
 
       <div className="space-y-4">
         <AnimatePresence mode="popLayout">
