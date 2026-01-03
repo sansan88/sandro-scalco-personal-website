@@ -6,22 +6,36 @@ import FeedCard from "@/components/feed/FeedCard";
 import { sampleFeed } from "@/data/sampleFeed";
 import { Platform, FeedItem } from "@/types/feed";
 import { useMediumFeed } from "@/hooks/useMediumFeed";
+import { useMastodonFeed } from "@/hooks/useMastodonFeed";
+import { useBlueskyFeed } from "@/hooks/useBlueskyFeed";
 
 const MEDIUM_USERNAME = "sandroscalco";
+const MASTODON_USERNAME = "sandroscalco";
+const MASTODON_INSTANCE = "mastodon.social";
+const BLUESKY_HANDLE = "sandroscalco.bsky.social";
 
 const Index = () => {
   const [activeFilter, setActiveFilter] = useState<Platform | "all">("all");
   const { data: mediumArticles, isLoading: mediumLoading } = useMediumFeed(MEDIUM_USERNAME);
+  const { data: mastodonPosts, isLoading: mastodonLoading } = useMastodonFeed(MASTODON_USERNAME, MASTODON_INSTANCE);
+  const { data: blueskyPosts, isLoading: blueskyLoading } = useBlueskyFeed(BLUESKY_HANDLE);
 
-  // Combine real Medium articles with sample data for other platforms
+  const isLoading = mediumLoading || mastodonLoading || blueskyLoading;
+
+  // Combine real feeds with sample data for LinkedIn and Strava
   const allFeedItems = useMemo(() => {
-    const otherPlatformItems = sampleFeed.filter(item => item.platform !== "medium");
-    const mediumItems: FeedItem[] = mediumArticles || [];
+    const linkedinAndStrava = sampleFeed.filter(
+      item => item.platform === "linkedin" || item.platform === "strava"
+    );
     
-    return [...mediumItems, ...otherPlatformItems].sort(
+    const mediumItems: FeedItem[] = mediumArticles || [];
+    const mastodonItems: FeedItem[] = mastodonPosts || [];
+    const blueskyItems: FeedItem[] = blueskyPosts || [];
+    
+    return [...mediumItems, ...mastodonItems, ...blueskyItems, ...linkedinAndStrava].sort(
       (a, b) => b.date.getTime() - a.date.getTime()
     );
-  }, [mediumArticles]);
+  }, [mediumArticles, mastodonPosts, blueskyPosts]);
 
   const filteredFeed = useMemo(() => {
     if (activeFilter === "all") {
@@ -46,9 +60,9 @@ const Index = () => {
 
       <FeedFilter activeFilter={activeFilter} onFilterChange={setActiveFilter} />
 
-      {mediumLoading && activeFilter === "all" || activeFilter === "medium" ? (
-        <p className="py-4 text-sm text-muted-foreground">Lade Medium-Artikel...</p>
-      ) : null}
+      {isLoading && (
+        <p className="py-4 text-sm text-muted-foreground">Lade Inhalte...</p>
+      )}
 
       <div className="space-y-4">
         <AnimatePresence mode="popLayout">
