@@ -1,11 +1,12 @@
 import Layout from "@/components/Layout";
 import { ExternalLink } from "lucide-react";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 const socialLinks = [
   { name: "Medium", url: "https://medium.com/@sandroscalco", icon: "📝" },
-  { name: "Mastodon", url: "https://mastodon.social/@sandro", icon: "🐘" },
-  { name: "Bluesky", url: "https://bsky.app/profile/sandro", icon: "🦋" },
-  { name: "LinkedIn", url: "https://linkedin.com/in/sandro-scalco", icon: "💼" },
+  { name: "Mastodon", url: "https://mastodon.social/@sandroscalco", icon: "🐘" },
+  { name: "Bluesky", url: "https://bsky.app/profile/sandroscalco.bsky.social", icon: "🦋" },
+  { name: "LinkedIn", url: "https://www.linkedin.com/in/sandroscalco", icon: "💼" },
   { name: "Strava", url: "https://strava.com/athletes/sandro", icon: "🏃" },
 ];
 
@@ -14,25 +15,34 @@ const About = () => {
     <Layout>
       <div className="max-w-2xl">
         <div className="mb-8 flex items-start gap-6">
-          <div className="h-24 w-24 shrink-0 rounded-full bg-secondary" />
+          <img 
+            src={profilePhoto} 
+            alt="Sandro Scalco" 
+            className="h-24 w-24 shrink-0 rounded-full object-cover"
+          />
           <div>
             <h1 className="mb-2 text-3xl font-bold tracking-tight">Sandro Scalco</h1>
             <p className="text-lg text-muted-foreground">
-              Entwickler, Blogger & Sportler
+              Gründer von liitu & Digital Democracy Hub
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Schaffhausen, Schweiz
             </p>
           </div>
         </div>
 
         <div className="prose prose-neutral mb-12">
           <p className="text-foreground leading-relaxed">
-            Willkommen auf meiner persönlichen Website! Hier findest du alle meine 
-            Aktivitäten aus verschiedenen Plattformen an einem Ort. Ich schreibe über 
-            Technologie, teile Gedanken auf Social Media und dokumentiere meine 
-            sportlichen Aktivitäten.
+            Für eine menschzentrierte, digitale Zukunft, die verbindet, befähigt – und alle einbezieht.
           </p>
           <p className="text-foreground leading-relaxed">
-            Diese Seite aggregiert automatisch meine Inhalte von Medium, Mastodon, 
-            Bluesky, LinkedIn und Strava, damit du nichts verpasst.
+            Als Gründer von liitu entwickle ich digitale Lösungen, die von künstlicher Intelligenz 
+            angetrieben und vom Menschen inspiriert sind. Unsere Vision: Eine digitale Zukunft, 
+            die den Menschen ins Zentrum stellt – in der Technologie nicht entfremdet, sondern 
+            verbindet, befähigt und Beteiligung fördert, besonders im demokratischen und öffentlichen Raum.
+          </p>
+          <p className="text-foreground leading-relaxed text-sm">
+            Executive MBA • Master Business Innovation • BSc. Informatik Service Engineering
           </p>
         </div>
 
