@@ -20,7 +20,7 @@ const GitHubCard = ({ item }: GitHubCardProps) => {
     <CardWrapper
       date={item.date}
       url={item.url}
-      icon="🐙"
+      icon="🤖"
       platformName="GitHub"
       platformColor="text-gray-600 dark:text-gray-400"
     >
