@@ -9,7 +9,6 @@ import { useMediumFeed } from "@/hooks/useMediumFeed";
 import { useMastodonFeed } from "@/hooks/useMastodonFeed";
 import { useBlueskyFeed } from "@/hooks/useBlueskyFeed";
 import { useGitHubFeed } from "@/hooks/useGitHubFeed";
-import { useStravaFeed } from "@/hooks/useStravaFeed";
 
 const MEDIUM_USERNAME = "sandroscalco";
 const MASTODON_USERNAME = "sandroscalco";
@@ -23,11 +22,10 @@ const Index = () => {
   const { data: mastodonPosts, isLoading: mastodonLoading } = useMastodonFeed(MASTODON_USERNAME, MASTODON_INSTANCE);
   const { data: blueskyPosts, isLoading: blueskyLoading } = useBlueskyFeed(BLUESKY_HANDLE);
   const { data: githubRepos, isLoading: githubLoading } = useGitHubFeed(GITHUB_USERNAME);
-  const { data: stravaActivities, isLoading: stravaLoading } = useStravaFeed();
 
-  const isLoading = mediumLoading || mastodonLoading || blueskyLoading || githubLoading || stravaLoading;
+  const isLoading = mediumLoading || mastodonLoading || blueskyLoading || githubLoading;
 
-  // Combine real feeds with sample data for LinkedIn only (Strava now comes from API)
+  // Combine real feeds with sample data for LinkedIn
   const allFeedItems = useMemo(() => {
     const linkedinPosts = sampleFeed.filter(item => item.platform === "linkedin");
     
@@ -35,12 +33,11 @@ const Index = () => {
     const mastodonItems: FeedItem[] = mastodonPosts || [];
     const blueskyItems: FeedItem[] = blueskyPosts || [];
     const githubItems: FeedItem[] = githubRepos || [];
-    const stravaItems: FeedItem[] = stravaActivities || [];
     
-    return [...mediumItems, ...mastodonItems, ...blueskyItems, ...githubItems, ...stravaItems, ...linkedinPosts].sort(
+    return [...mediumItems, ...mastodonItems, ...blueskyItems, ...githubItems, ...linkedinPosts].sort(
       (a, b) => b.date.getTime() - a.date.getTime()
     );
-  }, [mediumArticles, mastodonPosts, blueskyPosts, githubRepos, stravaActivities]);
+  }, [mediumArticles, mastodonPosts, blueskyPosts, githubRepos]);
 
   const filteredFeed = useMemo(() => {
     if (activeFilter === "all") {

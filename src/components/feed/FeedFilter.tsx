@@ -12,7 +12,6 @@ const filters: { value: Platform | "all"; label: string; icon: string }[] = [
   { value: "mastodon", label: "Mastodon", icon: "🐘" },
   { value: "bluesky", label: "Bluesky", icon: "🦋" },
   { value: "linkedin", label: "LinkedIn", icon: "💼" },
-  { value: "strava", label: "Strava", icon: "🏃" },
   { value: "github", label: "GitHub", icon: "🐙" },
 ];
 

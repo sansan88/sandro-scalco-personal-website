@@ -3,7 +3,6 @@ import MediumCard from "./cards/MediumCard";
 import MastodonCard from "./cards/MastodonCard";
 import BlueskyCard from "./cards/BlueskyCard";
 import LinkedInCard from "./cards/LinkedInCard";
-import StravaCard from "./cards/StravaCard";
 import GitHubCard from "./cards/GitHubCard";
 
 interface FeedCardProps {
@@ -20,8 +19,6 @@ const FeedCard = ({ item }: FeedCardProps) => {
       return <BlueskyCard item={item} />;
     case "linkedin":
       return <LinkedInCard item={item} />;
-    case "strava":
-      return <StravaCard item={item} />;
     case "github":
       return <GitHubCard item={item} />;
     default:
