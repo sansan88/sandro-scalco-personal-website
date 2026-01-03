@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import FeedFilter from "@/components/feed/FeedFilter";
 import FeedCard from "@/components/feed/FeedCard";
@@ -17,26 +18,53 @@ const Index = () => {
 
   return (
     <Layout>
-      <div className="mb-8">
+      <motion.div 
+        className="mb-8"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
         <h1 className="mb-2 text-3xl font-bold tracking-tight">Feed</h1>
         <p className="text-muted-foreground">
           Meine neuesten Aktivitäten aus dem Web.
         </p>
-      </div>
+      </motion.div>
 
       <FeedFilter activeFilter={activeFilter} onFilterChange={setActiveFilter} />
 
       <div className="space-y-4">
-        {filteredFeed.map((item) => (
-          <FeedCard key={item.id} item={item} />
-        ))}
+        <AnimatePresence mode="popLayout">
+          {filteredFeed.map((item, index) => (
+            <motion.div
+              key={item.id}
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ 
+                duration: 0.3, 
+                delay: index * 0.05,
+                layout: { duration: 0.3 }
+              }}
+            >
+              <FeedCard item={item} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
-      {filteredFeed.length === 0 && (
-        <p className="py-12 text-center text-muted-foreground">
-          Keine Einträge für diesen Filter.
-        </p>
-      )}
+      <AnimatePresence>
+        {filteredFeed.length === 0 && (
+          <motion.p 
+            className="py-12 text-center text-muted-foreground"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            Keine Einträge für diesen Filter.
+          </motion.p>
+        )}
+      </AnimatePresence>
     </Layout>
   );
 };
