@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import { ExternalLink } from "lucide-react";
-import profilePhoto from "@/assets/profile-photo.jpg";
+import profilePhoto from "@/assets/profile-photo.png";
 
 const socialLinks = [
   { name: "Medium", url: "https://medium.com/@sandroscalco", icon: "📝" },
