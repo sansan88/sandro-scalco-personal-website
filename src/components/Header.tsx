@@ -1,4 +1,5 @@
 import { NavLink } from "@/components/NavLink";
+import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   return (
@@ -7,22 +8,25 @@ const Header = () => {
         <NavLink to="/" className="text-xl font-semibold tracking-tight">
           Sandro Scalco
         </NavLink>
-        <nav className="flex items-center gap-8">
-          <NavLink
-            to="/"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            activeClassName="text-foreground"
-          >
-            Feed
-          </NavLink>
-          <NavLink
-            to="/about"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            activeClassName="text-foreground"
-          >
-            Über mich
-          </NavLink>
-        </nav>
+        <div className="flex items-center gap-6">
+          <nav className="flex items-center gap-8">
+            <NavLink
+              to="/"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              activeClassName="text-foreground"
+            >
+              Feed
+            </NavLink>
+            <NavLink
+              to="/about"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              activeClassName="text-foreground"
+            >
+              Über mich
+            </NavLink>
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
