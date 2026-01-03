@@ -10,6 +10,33 @@ const socialLinks = [
   { name: "Strava", url: "https://strava.com/athletes/sandro", icon: "🏃" },
 ];
 
+const education = [
+  { 
+    degree: "Executive MBA", 
+    field: "Management HWZ", 
+    school: "HWZ Hochschule für Wirtschaft Zürich", 
+    year: "2024 - 2025" 
+  },
+  { 
+    degree: "MAS", 
+    field: "Business Innovation", 
+    school: "Hochschule für Wirtschaft Zürich HWZ", 
+    year: "2017 - 2019" 
+  },
+  { 
+    degree: "CAS", 
+    field: "Innovation Management", 
+    school: "HWZ Hochschule für Wirtschaft Zürich", 
+    year: "2018 - 2019" 
+  },
+  { 
+    degree: "CAS", 
+    field: "Digital Masterclass", 
+    school: "HWZ Hochschule für Wirtschaft Zürich", 
+    year: "2018" 
+  },
+];
+
 const About = () => {
   return (
     <Layout>
@@ -41,9 +68,29 @@ const About = () => {
             die den Menschen ins Zentrum stellt – in der Technologie nicht entfremdet, sondern 
             verbindet, befähigt und Beteiligung fördert, besonders im demokratischen und öffentlichen Raum.
           </p>
-          <p className="text-foreground leading-relaxed text-sm">
-            Executive MBA • Master Business Innovation • BSc. Informatik Service Engineering
-          </p>
+        </div>
+
+        <div className="mb-12">
+          <h2 className="mb-4 text-lg font-semibold">Ausbildung</h2>
+          <div className="space-y-4">
+            {education.map((edu, index) => (
+              <div 
+                key={index} 
+                className="rounded-lg border border-border p-4"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <span className="inline-block rounded bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
+                      {edu.degree}
+                    </span>
+                    <p className="mt-1 font-medium">{edu.field}</p>
+                    <p className="text-sm text-muted-foreground">{edu.school}</p>
+                  </div>
+                  <span className="shrink-0 text-sm text-muted-foreground">{edu.year}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div>
