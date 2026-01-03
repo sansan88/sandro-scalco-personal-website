@@ -11,6 +11,12 @@ interface TokenResponse {
   expires_at: number;
 }
 
+interface StravaPhoto {
+  urls: {
+    [key: string]: string;
+  };
+}
+
 interface StravaActivity {
   id: number;
   name: string;
@@ -19,6 +25,10 @@ interface StravaActivity {
   moving_time: number;
   total_elevation_gain: number;
   start_date: string;
+  total_photo_count: number;
+  photos?: {
+    primary?: StravaPhoto;
+  };
 }
 
 async function getAccessToken(): Promise<string> {
@@ -66,7 +76,8 @@ serve(async (req) => {
 
     console.log('Fetching Strava activities...');
 
-    const response = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=30', {
+    // Fetch more activities to filter for ones with photos
+    const response = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=100', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
@@ -81,17 +92,57 @@ serve(async (req) => {
     const activities: StravaActivity[] = await response.json();
     console.log(`Fetched ${activities.length} activities`);
 
-    const formattedActivities = activities.map((activity) => ({
-      id: `strava-${activity.id}`,
-      platform: 'strava' as const,
-      date: activity.start_date,
-      url: `https://www.strava.com/activities/${activity.id}`,
-      title: activity.name,
-      type: activity.type,
-      distance: activity.distance / 1000, // Convert to km
-      duration: activity.moving_time,
-      elevation: Math.round(activity.total_elevation_gain),
-    }));
+    // Filter only activities with photos (Hike, Trail Run, etc.)
+    const activitiesWithPhotos = activities.filter(
+      (activity) => activity.total_photo_count > 0
+    );
+    console.log(`Found ${activitiesWithPhotos.length} activities with photos`);
+
+    // Fetch detailed activity info to get photo URLs
+    const detailedActivities = await Promise.all(
+      activitiesWithPhotos.slice(0, 20).map(async (activity) => {
+        try {
+          const detailResponse = await fetch(
+            `https://www.strava.com/api/v3/activities/${activity.id}?include_all_efforts=false`,
+            {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`,
+              },
+            }
+          );
+          if (detailResponse.ok) {
+            return await detailResponse.json();
+          }
+          return activity;
+        } catch (e) {
+          console.error(`Failed to fetch details for activity ${activity.id}:`, e);
+          return activity;
+        }
+      })
+    );
+
+    const formattedActivities = detailedActivities.map((activity: StravaActivity) => {
+      // Get the primary photo URL (largest available)
+      let imageUrl: string | undefined;
+      if (activity.photos?.primary?.urls) {
+        const urls = activity.photos.primary.urls;
+        // Prefer larger sizes: 600, 100, or any available
+        imageUrl = urls['600'] || urls['100'] || Object.values(urls)[0];
+      }
+
+      return {
+        id: `strava-${activity.id}`,
+        platform: 'strava' as const,
+        date: activity.start_date,
+        url: `https://www.strava.com/activities/${activity.id}`,
+        title: activity.name,
+        type: activity.type,
+        distance: activity.distance / 1000,
+        duration: activity.moving_time,
+        elevation: Math.round(activity.total_elevation_gain),
+        image: imageUrl,
+      };
+    });
 
     return new Response(JSON.stringify(formattedActivities), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

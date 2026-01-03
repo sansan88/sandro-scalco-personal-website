@@ -44,6 +44,7 @@ export interface StravaActivity extends BaseFeedItem {
   distance: number;
   duration: number;
   elevation?: number;
+  image?: string;
 }
 
 export interface GitHubRepo extends BaseFeedItem {
