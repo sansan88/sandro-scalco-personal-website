@@ -12,15 +12,21 @@ const socialLinks = [
 
 const education = [
   { 
-    degree: "Executive MBA", 
-    field: "Management HWZ", 
+    degree: "EMBA", 
+    field: "Management HWZ - Advanced Management Program", 
     school: "HWZ Hochschule für Wirtschaft Zürich", 
     year: "2024 - 2025" 
   },
   { 
+    degree: "IMP", 
+    field: "International Management Program", 
+    school: "University of Virginia Darden School of Business", 
+    year: "2025" 
+  },
+  { 
     degree: "MAS", 
     field: "Business Innovation", 
-    school: "Hochschule für Wirtschaft Zürich HWZ", 
+    school: "HWZ Hochschule für Wirtschaft Zürich", 
     year: "2017 - 2019" 
   },
   { 
@@ -34,6 +40,24 @@ const education = [
     field: "Digital Masterclass", 
     school: "HWZ Hochschule für Wirtschaft Zürich", 
     year: "2018" 
+  },
+  { 
+    degree: "CAS", 
+    field: "Change Management", 
+    school: "HWZ Hochschule für Wirtschaft Zürich", 
+    year: "2017 - 2018" 
+  },
+  { 
+    degree: "CAS", 
+    field: "Consulting & Communication", 
+    school: "HWZ Hochschule für Wirtschaft Zürich", 
+    year: "2017" 
+  },
+  { 
+    degree: "CAS", 
+    field: "General Management", 
+    school: "HWZ Hochschule für Wirtschaft Zürich", 
+    year: "2017" 
   },
 ];
 
