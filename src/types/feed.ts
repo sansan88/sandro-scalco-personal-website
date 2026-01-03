@@ -20,6 +20,7 @@ export interface MastodonPost extends BaseFeedItem {
   content: string;
   reblogs: number;
   favorites: number;
+  image?: string;
 }
 
 export interface BlueskyPost extends BaseFeedItem {
@@ -27,6 +28,7 @@ export interface BlueskyPost extends BaseFeedItem {
   content: string;
   likes: number;
   reposts: number;
+  image?: string;
 }
 
 export interface LinkedInPost extends BaseFeedItem {

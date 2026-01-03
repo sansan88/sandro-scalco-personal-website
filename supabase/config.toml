@@ -1,1 +1,10 @@
 project_id = "msrjlhuaipomregrijqi"
+
+[functions.fetch-medium-feed]
+verify_jwt = false
+
+[functions.fetch-mastodon-feed]
+verify_jwt = false
+
+[functions.fetch-bluesky-feed]
+verify_jwt = false
