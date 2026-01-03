@@ -1,4 +1,4 @@
-export type Platform = "medium" | "mastodon" | "bluesky" | "linkedin" | "strava";
+export type Platform = "medium" | "mastodon" | "bluesky" | "linkedin" | "strava" | "github";
 
 export interface BaseFeedItem {
   id: string;
@@ -46,4 +46,13 @@ export interface StravaActivity extends BaseFeedItem {
   elevation?: number;
 }
 
-export type FeedItem = MediumArticle | MastodonPost | BlueskyPost | LinkedInPost | StravaActivity;
+export interface GitHubRepo extends BaseFeedItem {
+  platform: "github";
+  name: string;
+  description: string | null;
+  language: string | null;
+  stars: number;
+  forks: number;
+}
+
+export type FeedItem = MediumArticle | MastodonPost | BlueskyPost | LinkedInPost | StravaActivity | GitHubRepo;

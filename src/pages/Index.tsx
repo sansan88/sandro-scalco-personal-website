@@ -8,19 +8,22 @@ import { Platform, FeedItem } from "@/types/feed";
 import { useMediumFeed } from "@/hooks/useMediumFeed";
 import { useMastodonFeed } from "@/hooks/useMastodonFeed";
 import { useBlueskyFeed } from "@/hooks/useBlueskyFeed";
+import { useGitHubFeed } from "@/hooks/useGitHubFeed";
 
 const MEDIUM_USERNAME = "sandroscalco";
 const MASTODON_USERNAME = "sandroscalco";
 const MASTODON_INSTANCE = "mastodon.social";
 const BLUESKY_HANDLE = "sandroscalco.bsky.social";
+const GITHUB_USERNAME = "sansan88";
 
 const Index = () => {
   const [activeFilter, setActiveFilter] = useState<Platform | "all">("all");
   const { data: mediumArticles, isLoading: mediumLoading } = useMediumFeed(MEDIUM_USERNAME);
   const { data: mastodonPosts, isLoading: mastodonLoading } = useMastodonFeed(MASTODON_USERNAME, MASTODON_INSTANCE);
   const { data: blueskyPosts, isLoading: blueskyLoading } = useBlueskyFeed(BLUESKY_HANDLE);
+  const { data: githubRepos, isLoading: githubLoading } = useGitHubFeed(GITHUB_USERNAME);
 
-  const isLoading = mediumLoading || mastodonLoading || blueskyLoading;
+  const isLoading = mediumLoading || mastodonLoading || blueskyLoading || githubLoading;
 
   // Combine real feeds with sample data for LinkedIn and Strava
   const allFeedItems = useMemo(() => {
@@ -31,11 +34,12 @@ const Index = () => {
     const mediumItems: FeedItem[] = mediumArticles || [];
     const mastodonItems: FeedItem[] = mastodonPosts || [];
     const blueskyItems: FeedItem[] = blueskyPosts || [];
+    const githubItems: FeedItem[] = githubRepos || [];
     
-    return [...mediumItems, ...mastodonItems, ...blueskyItems, ...linkedinAndStrava].sort(
+    return [...mediumItems, ...mastodonItems, ...blueskyItems, ...githubItems, ...linkedinAndStrava].sort(
       (a, b) => b.date.getTime() - a.date.getTime()
     );
-  }, [mediumArticles, mastodonPosts, blueskyPosts]);
+  }, [mediumArticles, mastodonPosts, blueskyPosts, githubRepos]);
 
   const filteredFeed = useMemo(() => {
     if (activeFilter === "all") {

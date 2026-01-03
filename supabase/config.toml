@@ -1,5 +1,8 @@
 project_id = "msrjlhuaipomregrijqi"
 
+[functions.fetch-github-repos]
+verify_jwt = false
+
 [functions.fetch-medium-feed]
 verify_jwt = false
 
