@@ -9,6 +9,7 @@ import { useMediumFeed } from "@/hooks/useMediumFeed";
 import { useMastodonFeed } from "@/hooks/useMastodonFeed";
 import { useBlueskyFeed } from "@/hooks/useBlueskyFeed";
 import { useGitHubFeed } from "@/hooks/useGitHubFeed";
+import { useStravaFeed } from "@/hooks/useStravaFeed";
 
 const MEDIUM_USERNAME = "sandroscalco";
 const MASTODON_USERNAME = "sandroscalco";
@@ -22,24 +23,24 @@ const Index = () => {
   const { data: mastodonPosts, isLoading: mastodonLoading } = useMastodonFeed(MASTODON_USERNAME, MASTODON_INSTANCE);
   const { data: blueskyPosts, isLoading: blueskyLoading } = useBlueskyFeed(BLUESKY_HANDLE);
   const { data: githubRepos, isLoading: githubLoading } = useGitHubFeed(GITHUB_USERNAME);
+  const { data: stravaActivities, isLoading: stravaLoading } = useStravaFeed();
 
-  const isLoading = mediumLoading || mastodonLoading || blueskyLoading || githubLoading;
+  const isLoading = mediumLoading || mastodonLoading || blueskyLoading || githubLoading || stravaLoading;
 
-  // Combine real feeds with sample data for LinkedIn and Strava
+  // Combine real feeds with sample data for LinkedIn only (Strava now comes from API)
   const allFeedItems = useMemo(() => {
-    const linkedinAndStrava = sampleFeed.filter(
-      item => item.platform === "linkedin" || item.platform === "strava"
-    );
+    const linkedinPosts = sampleFeed.filter(item => item.platform === "linkedin");
     
     const mediumItems: FeedItem[] = mediumArticles || [];
     const mastodonItems: FeedItem[] = mastodonPosts || [];
     const blueskyItems: FeedItem[] = blueskyPosts || [];
     const githubItems: FeedItem[] = githubRepos || [];
+    const stravaItems: FeedItem[] = stravaActivities || [];
     
-    return [...mediumItems, ...mastodonItems, ...blueskyItems, ...githubItems, ...linkedinAndStrava].sort(
+    return [...mediumItems, ...mastodonItems, ...blueskyItems, ...githubItems, ...stravaItems, ...linkedinPosts].sort(
       (a, b) => b.date.getTime() - a.date.getTime()
     );
-  }, [mediumArticles, mastodonPosts, blueskyPosts, githubRepos]);
+  }, [mediumArticles, mastodonPosts, blueskyPosts, githubRepos, stravaActivities]);
 
   const filteredFeed = useMemo(() => {
     if (activeFilter === "all") {
