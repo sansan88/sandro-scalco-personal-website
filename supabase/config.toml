@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.fetch-bluesky-feed]
 verify_jwt = false
+
+[functions.fetch-strava-activities]
+verify_jwt = false
