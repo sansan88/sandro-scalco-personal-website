@@ -59,6 +59,12 @@ const education = [
     school: "HWZ Hochschule für Wirtschaft Zürich", 
     year: "2017" 
   },
+  { 
+    degree: "BSc", 
+    field: "Informatik, Service Engineering", 
+    school: "ZHAW School of Engineering", 
+    year: "2010 - 2015" 
+  },
 ];
 
 const About = () => {
