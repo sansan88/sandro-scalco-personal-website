@@ -93,10 +93,7 @@ const About = () => {
             Für eine menschzentrierte, digitale Zukunft, die verbindet, befähigt – und alle einbezieht.
           </p>
           <p className="text-foreground leading-relaxed">
-            Als Gründer von liitu entwickle ich digitale Lösungen, die von künstlicher Intelligenz 
-            angetrieben und vom Menschen inspiriert sind. Unsere Vision: Eine digitale Zukunft, 
-            die den Menschen ins Zentrum stellt – in der Technologie nicht entfremdet, sondern 
-            verbindet, befähigt und Beteiligung fördert, besonders im demokratischen und öffentlichen Raum.
+            Ich entwickle digitale Lösungen mit Substanz – technologisch solide, menschlich gedacht. Mir geht es nicht um den nächsten Trend, sondern darum, was für Menschen und Organisationen wirklich funktioniert. Meine Vision: Eine digitale Zukunft, die den Menschen ins Zentrum stellt – in der Technologie nicht entfremdet, sondern verbindet, befähigt und Beteiligung fördert, besonders im demokratischen und öffentlichen Raum.
           </p>
         </div>
 
