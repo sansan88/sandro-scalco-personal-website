@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { ExternalLink } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const socialLinks = [
   { name: "Medium", url: "https://medium.com/@sandroscalco", icon: "📝" },
@@ -68,6 +69,7 @@ const education = [
 ];
 
 const About = () => {
+  const { t } = useLanguage();
   return (
     <Layout>
       <div className="max-w-2xl">
@@ -80,25 +82,25 @@ const About = () => {
           <div>
             <h1 className="mb-2 text-3xl font-bold tracking-tight">Sandro Scalco</h1>
             <p className="text-lg text-muted-foreground">
-              Gründer & Tech-Unternehmer mit Haltung
+              {t("about.role")}
             </p>
             <p className="text-sm text-muted-foreground">
-              Schaffhausen, Schweiz
+              {t("about.location")}
             </p>
           </div>
         </div>
 
         <div className="prose prose-neutral mb-12">
           <p className="text-foreground leading-relaxed">
-            Für eine menschzentrierte, digitale Zukunft, die verbindet, befähigt – und alle einbezieht.
+            {t("about.intro")}
           </p>
           <p className="text-foreground leading-relaxed">
-            Ich entwickle digitale Lösungen mit Substanz – technologisch solide, menschlich gedacht. Mir geht es nicht um den nächsten Trend, sondern darum, was für Menschen und Organisationen wirklich funktioniert. Meine Vision: Eine digitale Zukunft, die den Menschen ins Zentrum stellt – in der Technologie nicht entfremdet, sondern verbindet, befähigt und Beteiligung fördert, besonders im demokratischen und öffentlichen Raum.
+            {t("about.body")}
           </p>
         </div>
 
         <div className="mb-12">
-          <h2 className="mb-4 text-lg font-semibold">Ausbildung</h2>
+          <h2 className="mb-4 text-lg font-semibold">{t("about.education")}</h2>
           <div className="space-y-4">
             {education.map((edu, index) => (
               <div 
@@ -121,7 +123,7 @@ const About = () => {
         </div>
 
         <div>
-          <h2 className="mb-4 text-lg font-semibold">Folge mir</h2>
+          <h2 className="mb-4 text-lg font-semibold">{t("about.follow")}</h2>
           <div className="grid gap-3 sm:grid-cols-2">
             {socialLinks.map((link) => (
               <a
