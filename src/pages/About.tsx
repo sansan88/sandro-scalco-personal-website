@@ -80,7 +80,7 @@ const About = () => {
           <div>
             <h1 className="mb-2 text-3xl font-bold tracking-tight">Sandro Scalco</h1>
             <p className="text-lg text-muted-foreground">
-              Gründer von liitu & Digital Democracy Hub
+              Gründer & Tech-Unternehmer mit Haltung
             </p>
             <p className="text-sm text-muted-foreground">
               Schaffhausen, Schweiz
